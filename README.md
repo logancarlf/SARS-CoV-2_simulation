@@ -15,4 +15,8 @@ The simulations runs based on initial conditions. These include:
 	- Rate of recovery
 	- Rate of mortality
 	- Rate of vaccination
+# Differential Equations
+The model works by solving a set of coupled, ordinary differential equations. Each equation is needed to define the number of people in each respective category of which there are 5. Hence, there are 5 differentials that are solved:
+
+$\frac{dS}{dt}=-\frac{\beta S I}{N}$
 
