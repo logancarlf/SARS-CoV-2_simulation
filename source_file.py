@@ -20,5 +20,5 @@ Alpha = 0.3
 
 
 test = SIRVD_simulation(N, Inf, Alpha, Beta, Gamma, Mu)
-test.run(100, 1)
+test.run(period, dt)
 test.graph()

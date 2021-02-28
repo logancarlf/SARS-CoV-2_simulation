@@ -72,7 +72,7 @@ class SIRVD_simulation:
             plt.scatter(self._time, self._R, label='Recovered')
         if Plot_Deceased:
             plt.scatter(self._time, self._D, label='Deceased')
- 
+
         plt.title("Epidemiolgical SIRD Simulation")
         plt.xlabel("Time $t$ / $days$")
         plt.ylabel("Number of People $N$")
