@@ -18,5 +18,5 @@ The simulations runs based on initial conditions. These include:
 # Differential Equations
 The model works by solving a set of coupled, ordinary differential equations. Each equation is needed to define the number of people in each respective category of which there are 5. Hence, there are 5 differentials that are solved:
 
-$\frac{dS}{dt}=-\frac{\beta S I}{N}$
+<a href="https://www.codecogs.com/eqnedit.php?latex=\frac{dS}{dt}=-\frac{\beta&space;S&space;I}{N}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\frac{dS}{dt}=-\frac{\beta&space;S&space;I}{N}" title="\frac{dS}{dt}=-\frac{\beta S I}{N}" /></a>
 
