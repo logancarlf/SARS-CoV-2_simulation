@@ -46,18 +46,18 @@ class SIRVD_simulation:
         '''
 
         # define boundary conditions
-        y0 = self._S, self._I, self._R, self._D
+        y0 = self._S, self._I, self._R, self._D, self._V
         # define functional parameters
-        func_args = self._N, self._beta, self._gamma, self._mu
+        func_args = self._N, self._beta, self._gamma, self._mu, self._alpha
         # create array for time points of the simulation
         self._time = np.arange(0, period, dt)
         # solve the differential equations
         solution = sp.odeint(differentials, y0, self._time, args=func_args)
         # store solutions in data attributes
-        self._S, self._I, self._R, self._D = solution.T
+        self._S, self._I, self._R, self._D, self._V = solution.T
 
     def graph(self, Plot_Susceptible=True, Plot_Infected=True,
-              Plot_Recovered=True, Plot_Deceased=True):
+              Plot_Recovered=True, Plot_Deceased=True, Plot_Vaccinated=True):
         '''
         A basic visualisation of the data by plotting the four data categories:
         Susceptible, Infected, Recovered and Deceased.
@@ -74,6 +74,8 @@ class SIRVD_simulation:
             plt.scatter(self._time, self._R, label='Recovered')
         if Plot_Deceased:
             plt.scatter(self._time, self._D, label='Deceased')
+        if Plot_Vaccinated:
+            plt.scatter(self._time, self._V, label='Vaccinated')
 
         plt.title("Epidemiolgical SIRD Simulation")
         plt.xlabel("Time $t$ / $days$")
