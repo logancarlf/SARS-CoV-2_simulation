@@ -6,7 +6,7 @@ from differential_eqns import differentials
 
 class SIRVD_simulation:
     def __init__(self, population_size, infected, vaccination_rate,
-                 infection_rate, recovery_rate, mortality_rate):
+                 infection_rate, recovery_rate, mortality_rate, vaccination_time):
         '''
         The simulation models 5 categories of people in an epidemic based on 4
         initial parameters of the disease:
@@ -16,6 +16,7 @@ class SIRVD_simulation:
             - Rate of Mortality
             - Population
             - Number of Infected People
+            - Time that vaccine rollout begins
 
         This will determine through time the number of people that are:
             - Susceptible to the disease
@@ -30,6 +31,7 @@ class SIRVD_simulation:
         self._gamma = recovery_rate
         self._mu = mortality_rate
         self._N = population_size
+        self._tvac = vaccination_time
 
         self._S = population_size - infected
         self._I = infected
@@ -48,7 +50,7 @@ class SIRVD_simulation:
         # define boundary conditions
         y0 = self._S, self._I, self._R, self._D, self._V
         # define functional parameters
-        func_args = self._N, self._beta, self._gamma, self._mu, self._alpha
+        func_args = self._N, self._beta, self._gamma, self._mu, self._alpha, self._tvac
         # create array for time points of the simulation
         self._time = np.arange(0, period, dt)
         # solve the differential equations

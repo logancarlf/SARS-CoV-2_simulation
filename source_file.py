@@ -15,9 +15,11 @@ Gamma = 0.05
 # rate of mortality
 Mu = 0.01
 # rate of vaccination rollout
-Alpha = 0.3
+Alpha = 0.01
+# first day of vaccine rollout
+t_vac = 50
 
 
-test = SIRVD_simulation(N, Inf, Alpha, Beta, Gamma, Mu)
+test = SIRVD_simulation(N, Inf, Alpha, Beta, Gamma, Mu, t_vac)
 test.run(Period, dt)
 test.graph()
