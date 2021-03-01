@@ -1,6 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.integrate as sp
+import matplotlib.pyplot as plt
 from differential_eqns import differentials
 
 
