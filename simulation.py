@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as sp
-from differential_eqns import *
+from differential_eqns import differentials
+
 
 class SIRVD_simulation:
     def __init__(self, population_size, infected, vaccination_rate,
@@ -64,6 +65,7 @@ class SIRVD_simulation:
         Each respective category can be excluded from the graph by setting the
         argument Plot_[category_name]=False in the run function.
         '''
+
         if Plot_Susceptible:
             plt.scatter(self._time, self._S, label='Susceptible')
         if Plot_Infected:
@@ -79,4 +81,3 @@ class SIRVD_simulation:
         plt.legend(loc='center right')
         plt.grid()
         plt.show()
-
