@@ -10,16 +10,16 @@ class SIRVD_simulation:
         '''
         The simulation models 5 categories of people in an epidemic based on 4
         initial parameters of the disease:
+            - Number of Infected People
+            - Population
             - Rate of Vaccination
             - Rate of Infection
             - Rate of Recovery
             - Rate of Mortality
-            - Population
-            - Number of Infected People
 
-        This will determine through time the number of people that are:
+        This will determine, through time, the number of people that are:
             - Susceptible to the disease
-            - Infected with the diseaes
+            - Infected with the diseaese
             - Vaccinated from the disease
             - Recovered from the disease
             - Deceased due to the disease

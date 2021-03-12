@@ -9,7 +9,7 @@ dt = 1
 # number of time intervals the simulation runs
 Period = 200
 # rate of infection
-Beta = 0.2
+Beta = 0.5
 # rate of recovery
 Gamma = 0.05
 # rate of mortality
