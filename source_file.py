@@ -16,9 +16,9 @@ Period = 59
 
 
 # rate of infection
-Beta = 0.0012
+Beta = 0.52
 # rate of recovery
-Gamma = 0.001
+Gamma = 0.44
 # rate of mortality
 Mu = 0.0018
 
@@ -37,9 +37,9 @@ time_array = np.arange(0, 59, 1)
 def parameter_fit(t,B,y,u):
     fit = SIRVD_simulation(N, I[0], R[0], V[0], D[0], B, y, u)
     fit.run(59, 1)
-    return fit.recovered_model()
+    return fit.infected_model()
 
-fit = curve_fit(parameter_fit, time_array, R)
+#fit = curve_fit(parameter_fit, time_array, I)
 
 
 
@@ -47,12 +47,16 @@ test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], Beta, Gamma, Mu)
 test.run(Period, dt)
 test.graph(Plot_Susceptible=False, Plot_Vaccinated=False)
 
+susceptible_model = test.susceptible_model()
 infected_model = test.infected_model()
 recovered_model = test.recovered_model()
 vaccinated_model = test.vaccinated_model()
 deceased_model = test.deceased_model()
 time_model = test.time_model()
 
+data = [time_model, susceptible_model, infected_model, vaccinated_model,
+        deceased_model, time_model]
+data = np.transpose(data)
 
 '''
 Test for Vaccination Program
@@ -106,3 +110,9 @@ plt.ylabel('Number of recovered People')
 plt.legend()
 plt.grid()
 plt.show()
+
+np.savetxt("OutputData.csv", data, delimiter=',', header='Time, S, I, R, V, D')
+
+
+
+
