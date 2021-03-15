@@ -5,8 +5,9 @@ from differential_eqns import differentials
 
 
 class SIRVD_simulation:
-    def __init__(self, population_size, infected, vaccination_rate,
-                 infection_rate, recovery_rate, mortality_rate):
+    def __init__(self, population_size, infected, recovered, vaccinated,
+                 deceased, infection_rate, recovery_rate,
+                 mortality_rate):
         '''
         The simulation models 5 categories of people in an epidemic based on 4
         initial parameters of the disease:
@@ -25,17 +26,17 @@ class SIRVD_simulation:
             - Deceased due to the disease
         '''
 
-        self._alpha = vaccination_rate
         self._beta = infection_rate
         self._gamma = recovery_rate
         self._mu = mortality_rate
         self._N = population_size
 
-        self._S = population_size - infected
+        self._S = population_size - infected - recovered - vaccinated \
+            - deceased
         self._I = infected
-        self._R = 0
-        self._V = 0
-        self._D = 0
+        self._R = recovered
+        self._V = vaccinated
+        self._D = deceased
         self._t = 0
 
     def run(self, period, dt):
@@ -46,7 +47,7 @@ class SIRVD_simulation:
         '''
 
         # define boundary conditions
-        y0 = self._S, self._I, self._R, self._D
+        y0 = self._S, self._I, self._R, self._V, self._D
         # define functional parameters
         func_args = self._N, self._beta, self._gamma, self._mu
         # create array for time points of the simulation
@@ -54,10 +55,11 @@ class SIRVD_simulation:
         # solve the differential equations
         solution = sp.odeint(differentials, y0, self._time, args=func_args)
         # store solutions in data attributes
-        self._S, self._I, self._R, self._D = solution.T
+        self._S, self._I, self._R, self._V, self._D = solution.T
+        
 
     def graph(self, Plot_Susceptible=True, Plot_Infected=True,
-              Plot_Recovered=True, Plot_Deceased=True):
+              Plot_Recovered=True, Plot_Deceased=True, Plot_Vaccinated=True):
         '''
         A basic visualisation of the data by plotting the four data categories:
         Susceptible, Infected, Recovered and Deceased.
@@ -72,12 +74,30 @@ class SIRVD_simulation:
             plt.scatter(self._time, self._I, label='Infected')
         if Plot_Recovered:
             plt.scatter(self._time, self._R, label='Recovered')
+        if Plot_Vaccinated:
+            plt.scatter(self._time, self._V, label='Vaccinated')
         if Plot_Deceased:
             plt.scatter(self._time, self._D, label='Deceased')
 
-        plt.title("Epidemiolgical SIRD Simulation")
+
+        plt.title("Epidemiolgical SIRVD Simulation")
         plt.xlabel("Time $t$ / $days$")
         plt.ylabel("Number of People $N$")
         plt.legend(loc='center right')
         plt.grid()
         plt.show()
+
+    def infected_model(self):
+        return self._I
+
+    def recovered_model(self):
+        return self._R
+
+    def vaccinated_model(self):
+        return self._V
+
+    def deceased_model(self):
+        return self._D
+    
+    def time_model(self):
+        return self._time
