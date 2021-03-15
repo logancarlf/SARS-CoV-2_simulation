@@ -52,6 +52,6 @@ def f_residue(p):
 guess = [0.01,0.01,0.01]
 y0 = data[0]
 c = optimize.least_squares(f_residue, guess, bounds = ([0,0,0],[1,1,1]))
-
+print(c.x)
     
 
