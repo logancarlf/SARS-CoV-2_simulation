@@ -86,6 +86,9 @@ class SIRVD_simulation:
         plt.legend(loc='center right')
         plt.grid()
         plt.show()
+        
+    def susceptible_model(self):
+        return self._S
 
     def infected_model(self):
         return self._I
