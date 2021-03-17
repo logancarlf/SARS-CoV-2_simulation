@@ -1,0 +1,135 @@
+#There are still some gaps left and please help me to have a double check. Thank you! 
+#By Mingjun Sun
+
+#Analyse the results
+
+datafr <- read.csv("first output data horizons.csv")
+datasm <-
+
+#the mean value of daily number of cases in the UK
+
+meanfr_dailycases <- mean(datafr$gov_cases_sorted,na.rm=T)
+
+#the mean value of daily number of cases from our simulation
+
+meansm_dailycases <- mean(datasm$ ,na.rm=T)
+
+#the median value of daily number of cases in the uk
+
+medianfr_dailycases <- median(datafr$gov_cases_sorted,na.rm=T)
+
+#the median value of daily number of cases from our simulation
+
+mediansm_dailycases <- median(datasm$ ,na.rm=T)
+
+#the interquartile range of daily number of cases in the uk
+
+IQRfr_dailycases <- IQR(datafr$gov_cases_sorted,na.rm=T)
+
+#the interquartile range of daily number of cases
+
+IQRsm_dailycases <- IQR(datafr$ ,na.rm=T)
+
+#plot the differences of mean value, median value, and interquartile range between the data in reality and from our simulation
+
+meandf_dailycases <- abs (meanfr_dailycases - meanfr_dailycases)
+mediandf_dailycases <- abs (medianfr_dailycases - medianfr_dailycases)
+IQRdf_dailycases <- abs (IQRfr_dailycases - IQRfr_dailycases)
+y_daily_cases <- c(meandf_dailycases, mediandf_dailycases, IQRdf_dailycases)
+barplot(y_daily_cases, main="Differences of mean, median, and interquartile range for daily cases", horiz=TRUE, names.arg=c("mean", "median", "interqurtile range"))
+
+#the mean value of daily number of deaths in the UK
+
+meanfr_deathcases <- mean(datafr$gov_deaths_sorted,na.rm=T)
+
+#the mean value of daily number of deaths from our simulation
+
+meansm_deathcases <- mean(datasm$ ,na.rm=T)
+
+#the median value of daily number of deaths in the uk
+
+medianfr_deathcases <- median(datafr$gov_deaths_sorted,na.rm=T)
+
+#the median value of daily number of deaths from our simulation
+
+mediansm_deathcases <- median(datasm$ ,na.rm=T)
+
+#the interquartile range of daily number of deaths in the uk
+
+IQRfr_deathcases <- IQR(datafr$gov_deaths_sorted,na.rm=T)
+
+#the interquartile range of daily number of deaths
+
+IQRsm_deathcases <- IQR(datafr$ ,na.rm=T)
+
+#plot the differences of mean value, median value, and interquartile range between the data in reality and from our simulation
+
+meandf_dailydeaths <- abs (meanfr_dailycases - meanfr_dailycases)
+mediandf_dailydeaths <- abs (medianfr_dailycases - medianfr_dailycases)
+IQRdf_dailydeaths <- abs (IQRfr_dailycases - IQRfr_dailycases)
+y_daily_deaths <- c(meandf_dailydeaths, mediandf_dailydeaths, IQRdf_dailydeaths)
+barplot(y_daily_deaths, main="Differences of mean, median, and interquartile range for daily deaths", horiz=TRUE, names.arg=c("mean", "median", "interqurtile range"))
+
+#the mean value of cumulative value of daily number of cases in the UK
+
+meanfr_cumdailycases <- mean(datafr$gov_cases_cum,na.rm=T)
+
+#the mean value of cumulative value of daily number of cases from our simulation
+
+meansm_cumdailycases <- mean(datasm$ ,na.rm=T)
+
+#the median value cumulative value of of daily number of cases in the uk
+
+medianfr_cumdailycases <- median(datafr$gov_cases_cum,na.rm=T)
+
+#the median value of cumulative value of daily number of cases from our simulation
+
+mediansm_cumdailycases <- median(datasm$ ,na.rm=T)
+
+#the interquartile range of cumulative value of daily number of cases in the uk
+
+IQRfr_cumdailycases <- IQR(datafr$gov_cases_cum,na.rm=T)
+
+#the interquartile range of cumulative value of daily number of cases
+
+IQRsm_cumdailycases <- IQR(datafr$ ,na.rm=T)
+
+#plot the differences of mean value, median value, and interquartile range between the data in reality and from our simulation
+
+meandf_cumdailycases <- abs (meanfr_cumdailycases - meanfr_cumdailycases)
+mediandf_cumdailycases <- abs (medianfr_cumdailycases - medianfr_cumdailycases)
+IQRdf_cumdailycases <- abs (IQRfr_cumdailycases - IQRfr_cumdailycases)
+y_cum_daily_cases <- c(meandf_cumdailycases, mediandf_cumdailycases, IQRdf_cumdailycases)
+barplot(y_cum_daily_cases, main="Differences of mean, median, and interquartile range for cumulative daily cases", horiz=TRUE, names.arg=c("mean", "median", "interqurtile range"))
+
+#the mean value of daily number of deaths in the UK
+
+meanfr_cumdeathcases <- mean(datafr$gov_deaths_cum,na.rm=T)
+
+#the mean value of daily number of deaths from our simulation
+
+meansm_cumdeathcases <- mean(datasm$ ,na.rm=T)
+
+#the median value of daily number of deaths in the uk
+
+medianfr_cumdeathcases <- median(datafr$gov_deaths_cum,na.rm=T)
+
+#the median value of daily number of deaths from our simulation
+
+mediansm_cumdeathcases <- median(datasm$ ,na.rm=T)
+
+#the interquartile range of daily number of deaths in the uk
+
+IQRfr_cumdeathcases <- IQR(datafr$gov_deaths_cum,na.rm=T)
+
+#the interquartile range of daily number of deaths
+
+IQRsm_cumdeathcases <- IQR(datafr$ ,na.rm=T)
+
+#plot the differences of mean value, median value, and interquartile range between the data in reality and from our simulation
+
+meandf_cumdailydeaths <- abs (meanfr_cumdailycases - meanfr_cumdailycases)
+mediandf_cumdailydeaths <- abs (medianfr_cumdailycases - medianfr_cumdailycases)
+IQRdf_cumdailydeaths <- abs (IQRfr_cumdailycases - IQRfr_cumdailycases)
+y_cum_daily_deaths <- c(meandf_cumdailydeaths, mediandf_cumdailydeaths, IQRdf_cumdailydeaths)
+barplot(y_daily_deaths, main="Differences of mean, median, and interquartile range for cumulative daily deaths", horiz=TRUE, names.arg=c("mean", "median", "interqurtile range"))
