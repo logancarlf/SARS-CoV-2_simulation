@@ -19,3 +19,5 @@ def differentials(y, t, N, beta, gamma, mu):
     dV_dt = v(t)
     dD_dt = mu * I
     return dS_dt, dI_dt, dR_dt, dV_dt, dD_dt
+
+

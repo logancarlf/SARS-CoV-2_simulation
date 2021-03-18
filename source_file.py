@@ -1,7 +1,32 @@
 from simulation import SIRVD_simulation
-import numpy as np
+from differential_eqns import *
 import matplotlib.pyplot as plt
-from scipy.optimize import curve_fit
+import scipy.integrate as sp
+from scipy import optimize
+import pandas as pd
+import numpy as np
+
+
+def least_sq_func(x,params):
+    f = lambda y,t: differentials(y,t,N,params)
+    sol = sp.odeint(f,y0,x)
+    return sol
+
+
+def f_residue(p):
+    residue = (data - least_sq_func(time, p)).ravel()
+    return residue
+
+
+def differentials(y, t, N, k):  # k = [beta, gamma, mu]
+    S, I, R, V, D = y
+    dS_dt = -k[0] * S * I / N - v(t)
+    dI_dt = k[0] * S * I / N - k[1] * I - k[2] * I
+    dR_dt = k[1] * I
+    dV_dt = v(t)
+    dD_dt = k[2] * I
+    return dS_dt, dI_dt, dR_dt, dV_dt, dD_dt
+
 
 # define population number
 N = 67e6
@@ -10,40 +35,40 @@ Inf = 20
 # simulation runs in time interval dt
 dt = 1
 # number of time intervals the simulation runs
-Period = 59
-
-
-
-
+Period = 57
 # rate of infection
-Beta = 0.52
+Beta = 0.01
 # rate of recovery
-Gamma = 0.44
+Gamma = 0.01
 # rate of mortality
-Mu = 0.0018
+Mu = 0.01
 
 
-# import data from 10th Jan to 9th Mar
-data = np.loadtxt('10_dec_present_data.csv', delimiter=',',
-                  usecols=(1, 2, 3, 4), skiprows=1)
+data = pd.read_csv('10_dec_present_data.csv')
+data.rename(columns={'Unnamed: 0':'Date'}, inplace=True)
+data['SusPpl'] = 67.61e6 - data['cumDeaths'] - data['cumPplVac'] \
+                - data['cumInfected'] - data['cumRecovered']
+data = data.dropna(how='all', axis=1)
+data = data[:-1]
+data = data[1:]
+data = data.drop('Date', 1)
+cols = ['SusPpl', 'cumInfected', 'cumRecovered', 'cumPplVac', 'cumDeaths']
+data = data[cols]
+data = data.values.tolist()
+data = np.array(data)
 
-I = np.transpose(data)[0]
-R = np.transpose(data)[1]
-V = np.transpose(data)[2]
-D = np.transpose(data)[3]
+I = np.transpose(data)[1]
+R = np.transpose(data)[2]
+V = np.transpose(data)[3]
+D = np.transpose(data)[4]
+time = np.arange(0,len(data))
 
-time_array = np.arange(0, 59, 1)
+guess = [0.01,0.01,0.01]
+y0 = data[0]
+c = optimize.least_squares(f_residue, guess, bounds = ([0,0,0],[10,10,10]))
+print("Fit Parameters", c.x)
 
-def parameter_fit(t,B,y,u):
-    fit = SIRVD_simulation(N, I[0], R[0], V[0], D[0], B, y, u)
-    fit.run(59, 1)
-    return fit.infected_model()
-
-#fit = curve_fit(parameter_fit, time_array, I)
-
-
-
-test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], Beta, Gamma, Mu)
+test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], *c.x)
 test.run(Period, dt)
 test.graph(Plot_Susceptible=False, Plot_Vaccinated=False)
 
@@ -54,15 +79,12 @@ vaccinated_model = test.vaccinated_model()
 deceased_model = test.deceased_model()
 time_model = test.time_model()
 
-data = [time_model, susceptible_model, infected_model, vaccinated_model,
-        deceased_model, time_model]
-data = np.transpose(data)
 
 '''
 Test for Vaccination Program
 '''
 plt.figure(figsize=(5, 3.5))
-plt.scatter(time_model, vaccinated_model, color='red', 
+plt.scatter(time_model, vaccinated_model, color='red',
             label='Model Predictions')
 plt.scatter(time_model, V, color='black', label='Government Data')
 plt.title('Model vs Data: Vaccinated')
@@ -110,9 +132,4 @@ plt.ylabel('Number of recovered People')
 plt.legend()
 plt.grid()
 plt.show()
-
-np.savetxt("OutputData.csv", data, delimiter=',', header='Time, S, I, R, V, D')
-
-
-
 

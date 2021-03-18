@@ -1,16 +1,9 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Mar 14 16:11:58 2021
-
-@author: joshu
-"""
-
 import pandas as pd
 import numpy as np
 import scipy.integrate as sp
 from scipy import optimize
 
-data = pd.read_csv('parameter data.csv')
+data = pd.read_csv('10_dec_present_data.csv')
 data.rename( columns={'Unnamed: 0':'Date'}, inplace=True)
 data['SusPpl'] = 67.61e6 - data['cumDeaths'] - data['cumPplVac'] - data['cumInfected'] - data['cumRecovered']
 data = data.dropna(how='all', axis=1)
@@ -23,7 +16,7 @@ data = data.values.tolist()
 data = np.array(data)
 time = np.arange(0,len(data))
 N = 67.61e6
-#%%
+
 def v(t):
     V = np.loadtxt('VaccinationProgram.csv', delimiter=',',
                    usecols=(0), skiprows=1)
