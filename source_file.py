@@ -35,7 +35,7 @@ Inf = 20
 # simulation runs in time interval dt
 dt = 1
 # number of time intervals the simulation runs
-Period = 57
+Period = 92
 # rate of infection
 Beta = 0.01
 # rate of recovery
@@ -49,8 +49,8 @@ data.rename(columns={'Unnamed: 0':'Date'}, inplace=True)
 data['SusPpl'] = 67.61e6 - data['cumDeaths'] - data['cumPplVac'] \
                 - data['cumInfected'] - data['cumRecovered']
 data = data.dropna(how='all', axis=1)
-data = data[:-1]
-data = data[1:]
+#data = data[:-1]
+#data = data[1:]
 data = data.drop('Date', 1)
 cols = ['SusPpl', 'cumInfected', 'cumRecovered', 'cumPplVac', 'cumDeaths']
 data = data[cols]
@@ -63,12 +63,18 @@ V = np.transpose(data)[3]
 D = np.transpose(data)[4]
 time = np.arange(0,len(data))
 
-guess = [0.01,0.01,0.01]
+#%%
+
+guess = [0.317, 0.23, 0.001]
 y0 = data[0]
-c = optimize.least_squares(f_residue, guess, bounds = ([0,0,0],[10,10,10]))
+c = optimize.least_squares(f_residue, guess, bounds = ([0,0,0],[1,1,1]))
 print("Fit Parameters", c.x)
 
-test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], *c.x)
+#%%
+
+#c = [0.317, 0.23, 0.001]
+
+test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], c)
 test.run(Period, dt)
 test.graph(Plot_Susceptible=False, Plot_Vaccinated=False)
 
