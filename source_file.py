@@ -72,9 +72,9 @@ print("Fit Parameters", c.x)
 
 #%%
 
-#c = [0.317, 0.23, 0.001]
+c = [0.317, 0.23, 0.001]
 
-test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], c)
+test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], *c)
 test.run(Period, dt)
 test.graph(Plot_Susceptible=False, Plot_Vaccinated=False)
 
@@ -138,4 +138,6 @@ plt.ylabel('Number of recovered People')
 plt.legend()
 plt.grid()
 plt.show()
+
+
 
