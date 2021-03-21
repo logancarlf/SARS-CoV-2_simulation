@@ -7,6 +7,7 @@ def v(t):
     V = np.loadtxt('VaccinationProgram.csv', delimiter=',',
                    usecols=(0), skiprows=1)
     V = np.flip(V)
+    V = np.append(V, np.full(100, 0))
     return V[round(t)]
 
 

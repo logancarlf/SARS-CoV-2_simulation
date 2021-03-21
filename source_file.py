@@ -37,11 +37,11 @@ dt = 1
 # number of time intervals the simulation runs
 Period = 92
 # rate of infection
-Beta = 0.01
+Beta = 0.317
 # rate of recovery
-Gamma = 0.01
+Gamma = 0.23
 # rate of mortality
-Mu = 0.01
+Mu = 0.001
 
 
 data = pd.read_csv('10_dec_present_data.csv')
@@ -63,18 +63,7 @@ V = np.transpose(data)[3]
 D = np.transpose(data)[4]
 time = np.arange(0,len(data))
 
-#%%
-
-guess = [0.317, 0.23, 0.001]
-y0 = data[0]
-c = optimize.least_squares(f_residue, guess, bounds = ([0,0,0],[1,1,1]))
-print("Fit Parameters", c.x)
-
-#%%
-
-c = [0.317, 0.23, 0.001]
-
-test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], *c)
+test = SIRVD_simulation(N, I[0], R[0], V[0], D[0], Beta, Gamma, Mu)
 test.run(Period, dt)
 test.graph(Plot_Susceptible=False, Plot_Vaccinated=False)
 
